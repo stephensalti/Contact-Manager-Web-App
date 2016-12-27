@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<title> Login Page </title>
+	</head>
+	<body>
+		<nav class = "navbar navbar-inverse">
+  		<div class = "container-fluid">
+  			<div class = "navbar-header">
+  				<!--button shows up if window is small -->
+  				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span> 
+      			</button>
+  				<a href = "#" class = "navbar-brand"> FINAL PROJECT </a>
+  			</div>
+
+  			<!-- Navigation bar menu buttons -->
+  			<div class = "collapse navbar-collapse" id = "myNavbar"> 
+  				<ul class = "nav navbar-nav">
+  					<li class = "nav-item"> <a href = "/mailer"> New Contact </a></li>
+  					<li class = "nav-item"> <a href = "/contacts"> All Contacts </a></li>
+  				</ul>
+  			</div>
+  		</div>
+  	</nav>
+  	<div class = "col-md-5">
+  		<h3> Please Log In: </h3>
+		<form id = "LoginForm" method = "POST">
+			<div class = "form-group">
+				<label> Username:
+					<input class = "form-control" type = "text" id = "username" name = "username"required/>
+				</label>
+			</div>
+			<div class = "form-group">
+				<label> Password:
+					<input class = "form-control" type = "password" id = "password" name = "password" required/>
+				</label>
+			</div>
+			<button class = "btn btn-default" type = "submit"> Login </button>
+		</form>
+	</div>
+	</body>
+</html>

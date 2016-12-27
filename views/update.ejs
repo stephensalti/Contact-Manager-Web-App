@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  	<!-- Nav bar at top of page -->
+  	<nav class = "navbar navbar-inverse">
+  		<div class = "container-fluid">
+  			<div class = "navbar-header">
+  				<!--button shows up if window is small -->
+  				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span> 
+      			</button>
+  				<a href = "#" class = "navbar-brand"> FINAL PROJECT </a>
+  			</div>
+
+  			<!-- Navigation bar menu buttons -->
+  			<div class = "collapse navbar-collapse" id = "myNavbar"> 
+  				<ul class = "nav navbar-nav">
+  					<li class = "nav-item"> <a href = "/mailer"> New Contact </a></li>
+  					<li class = "nav-item"> <a href = "/contacts"> All Contacts </a></li>
+  				</ul>
+  				<ul class="nav navbar-nav navbar-right">
+      				<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    			</ul>
+  			</div>
+  		</div>
+  	</nav>
+  	<div class = "col-md-5 col-md-offset-4">
+    <form id = "updateForm" method = "POST" action = "/thanks">
+		<%  
+		if (contact.Prefix == "Mr. ") { %>
+			<div class = "btn-group" data-toggle = "buttons" style = "margin-bottom: 15px;">
+				<label class = "btn btn-default active"><input type = "radio" name = "radios" id = "r1" value = "Mr. " checked/>Mr.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r2" value = "Mrs. "/>Mrs.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r3" value = "Ms. "/>Ms.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r4" value = "Dr. "/>Dr.</label>
+			</div>
+		<% }
+		else if (contact.Prefix == "Mrs. ") { %>
+			<div class = "btn-group" data-toggle = "buttons" style = "margin-bottom: 15px;">
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r1" value = "Mr. "/>Mr.</label>
+				<label class = "btn btn-default active"><input type = "radio" name = "radios" id = "r2" value = "Mrs. " checked/>Mrs.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r3" value = "Ms. "/>Ms.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r4" value = "Dr. "/>Dr.</label>
+			</div>
+		<% }
+		else if (contact.Prefix == "Ms. ") { %>
+			<div class = "btn-group" data-toggle = "buttons" style = "margin-bottom: 15px;">
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r1" value = "Mr. "/>Mr.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r2" value = "Mrs. "/>Mrs.</label>
+				<label class = "btn btn-default active"><input type = "radio" name = "radios" id = "r3" value = "Ms. " checked/>Ms.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r4" value = "Dr. "/>Dr.</label>
+			</div>
+		<% }
+		else if (contact.Prefix === "Dr. ") { %>
+			<div class = "btn-group" data-toggle = "buttons" style = "margin-bottom: 15px;">
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r1" value = "Mr. "/>Mr.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r2" value = "Mrs. "/>Mrs.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r3" value = "Ms. "/>Ms.</label>
+				<label class = "btn btn-default active"><input type = "radio" name = "radios" id = "r4" value = "Dr. " checked/>Dr.</label>
+			</div>
+		<% } 
+		else { %>
+			<div class = "btn-group" data-toggle = "buttons" style = "margin-bottom: 15px;">
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r1" value = "Mr. "/>Mr.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r2" value = "Mrs. "/>Mrs.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r3" value = "Ms. "/>Ms.</label>
+				<label class = "btn btn-default"><input type = "radio" name = "radios" id = "r4" value = "Dr. "/>Dr.</label>
+			</div>
+		<% } %>
+		<div class = "form-group">
+			<label> First Name:
+				<input class = "form-control" type = "text" name = "First_Name" id = "First_Name" value = <%= contact.First_Name %> autofocus required/>
+			</label>
+			<label> Last Name:
+				<input class = "form-control" type = "text" name = "Last_Name" id = "Last_Name" value = <%= contact.Last_Name %> required/>
+			</label>
+		</div>
+		<div class = "form-group">
+			<label> Street:
+				<% if (contact.Street == "N/A") { %>
+					<input class = "form-control" type = "text" name = "Street"/>
+				<% }
+				else { var street = contact.Street.split(' ');
+				street = street.join("-") %>
+				<input class = "form-control" type = "text" name = "Street" value = <%= street %> />
+				<% } %>
+			</label>
+			<label> City:
+				<% if (contact.City == "N/A") { %>
+					<input class = "form-control" type = "text" name = "City"/>
+				<% }
+				else { var city = contact.City.split(' ');
+				city = city.join("-"); %>
+				<input class = "form-control" type = "text" name = "City" value = <%= city %> />
+				<% } %>
+			</label>
+			</div>
+			<div class = "form-group">
+				<label> State:
+					<% if (contact.State == "N/A") { %>
+						<input class = "form-control" type = "text" name = "State"/>
+					<% }
+					else { var state = contact.State.split(' ');
+						state = state.join("-"); %>
+						<input class = "form-control" type = "text" name = "State" value = <%= state %> />
+					<% } %>
+				</label>
+				<label> Zip:
+					<input class = "form-control" type = "text" name = "Zip" <% if (contact.Zip != "N/A") { %> value = <%= contact.Zip %> <% } %>/>
+				</label>
+			</div>
+			<div class = "form-group">
+				<label> Phone:
+					<input  class = "form-control" type = "text" name = "Phone" <% if (contact.Zip != "N/A") { %> value = <%= contact.Phone %> <% } %> />
+				</label>
+				<label> Email:
+					<input class = "form-control" type = "text" name = "Email" <% if (contact.Email != "N/A") { %> value = <%= contact.Email %> <% } %> />
+				</label>
+			</div>
+		
+			<h4> Method of Contact: </h4>
+			<div class = "radio">
+				<label><input type = "checkbox" name = "chkbx_phone"/> Phone </label>
+			</div>
+			<div class = "radio">
+				<label><input type = "checkbox" name = "chkbx_mail"/> Mail </label>
+			</div>
+			<div class = "radio">
+				<label><input type = "checkbox" name = "chkbx_email"/> Email </label>
+			</div>
+			<div class = "radio">
+				<label><input type = "checkbox" name = "chkbx_any" Checked/> Any </label>
+			</div>
+			<input type = "text" name = "DBid" id = "DBid" value = <%= contact._id %> hidden/>
+			<button class = "btn btn-default" type = "reset"> Reset </button>
+			<button class = "btn btn-default" type = "submit"> Save </button>
+		</form>
+	</div>
+  </body>
+</html>

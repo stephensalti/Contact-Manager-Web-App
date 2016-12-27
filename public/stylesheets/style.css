@@ -1,0 +1,35 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+#topNav {
+  margin-bottom: 0px !important;
+}
+table {
+	border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  margin-left: 10px;
+  margin-right: 10px;
+  /*border-collapse: collapse; Allows for borders to merge, so cell borders aren't doubled up  */
+}
+td, th {
+  white-space: nowrap;
+  font-size: small; 
+}
+#map{
+    margin-left:10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 99%;
+    height: 500px; 
+    border-style: outset;
+    border-color: #69b768;
+}
+.update{
+  color: #2e4fc9;
+}
+.delete{
+  color: #2e4fc9;
+}
+#contact_table {
+  overflow: auto;
+}

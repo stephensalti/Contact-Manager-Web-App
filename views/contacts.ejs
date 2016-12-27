@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script src = "/javascripts/drawmap.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  	<!-- Nav bar at top of page -->
+  	<nav class = "navbar navbar-inverse" id = "topNav">
+  		<div class = "container-fluid">
+  			<div class = "navbar-header">
+  				<!--button shows up if window is small -->
+  				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span> 
+      			</button>
+  				<a href = "#" class = "navbar-brand"> FINAL PROJECT </a>
+  			</div>
+
+  			<!-- Navigation bar menu buttons -->
+  			<div class = "collapse navbar-collapse" id = "myNavbar"> 
+  				<ul class = "nav navbar-nav">
+  					<li class = "nav-item"> <a href = "/mailer"> New Contact </a></li>
+  					<li class = "nav-item active"> <a href = "/contacts"> All Contacts </a></li>
+  				</ul>
+  				<ul class="nav navbar-nav navbar-right">
+      				<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    			</ul>
+  			</div>
+  		</div>
+  	</nav>
+  	<h1 class = "text-center"> Welcome to the Contacts Page </h1>
+  	<div id = "contact_table">
+  		<table class = "table table-striped table-hover table-condensed">
+			<caption class = "text-center"> Contacts </caption>
+				<thead>
+					<tr>
+						<th> Name </th>
+						<th> Street </th>
+						<th> City </th>
+						<th> State </th>
+						<th> Zip </th>
+						<th> Phone </th>
+						<th> Email </th>
+						<th style = "font-size: x-small;"> Contact by Phone</th>
+						<th style = "font-size: x-small;"> Contact by Mail</th>
+						<th style = "font-size: x-small;"> Contact by Email</th>
+						<th> Latitude </th>
+						<th> Longitude </th>
+						<th> </th>
+						<th> </th>
+					</tr>
+				</thead>
+				<tbody>
+				<% for (q in contacts) {
+					contacts[q].First_Name = contacts[q].Prefix + contacts[q].First_Name + " " + contacts[q].Last_Name;
+					delete contacts[q].Prefix; //still prints undefined before names without prefix!
+					delete contacts[q].Last_Name;
+					var contact = contacts[q]; 
+					/*console.log(contact.lat); */ %> 
+					<tr class = "contact">
+					<% for (r in contact) { %>
+						<% if (contact[r] == contacts[q].lat) { %>
+							<td class = "lat"> <%= contact[r] %> </td>
+						<% }
+						 else if (contact[r] == contacts[q].lng) { %>
+							<td class = "lng"> <%= contact[r] %> </td>
+						<% } 
+						else if (contact[r] == contacts[q]._id) { %>
+							<td class = "db_id" hidden> <%= contact[r] %> </td>
+						<% }
+						else if (contact[r] == contacts[q].formatAdr) { %>
+							<td class = "formattedAddress" hidden> <%= contact[r] %> </td>
+							<% }
+						else { %>
+							<td> <%= contact[r] %> </td>
+						<% } %>
+					<% } %>
+						<td class = "update" style = "padding-left: 2px; padding-right: 3px"> Update </td>
+						<td class = "delete" style = "padding-left: 3px; padding-right: 2px"> Delete </td>
+					</tr>
+				<% } %>
+				</tbody>
+		</table>
+	</div>
+		<div hidden>
+			<form id = "id_form" method = "POST" action = '/update'> 
+				<input type = "text" name = "DBid" id = "DBid"/>
+				<button type = "submit" id = "submit"> Submit </button>
+			</form>
+			<form id = "delete_form" method = "POST" action = '/contacts'>
+				<input type = "text" name = "DBid2" id = "DBid2"/>
+				<button type = "submit" id = "submit2"> Submit </button>
+			</form>
+		</div>
+		<script> 
+			var info;
+			var DBid;
+			$("td.update").on("click", function() { //when the update td is clicked, get the id from the sibling td element with the database id in it and put it in hidden form field and trigger the form's submit event
+				info = $(event.target).siblings(".db_id");
+				DBid = $(info).text();
+				$("#DBid").val(DBid);
+				$("#submit").trigger("click"); //triggers the submit button
+			});
+			$("td.delete").on("click", function() { //when delete element is clicked, retrieve contact id like in above function, 
+				info = $(event.target).siblings(".db_id");
+				DBid = $(info).text();
+				$("#DBid2").val(DBid);
+				$("#submit2").trigger("click"); //triggers the submit button
+			});
+			//When user clicks row, center map to that address
+			$("tr.contact").on("click", function() { 
+				var Lat = $(this).children(".lat").text(); //looks at child elements of tr that was clicked, finds the one with the lat class and takes it's text
+				var Lng = $(this).children(".lng").text(); 
+				map.setCenter({lat: Number(Lat), lng: Number(Lng)});
+			});
+		</script>
+		<div id = "map"></div>
+		<script src="https://maps.googleapis.com/maps/api/js?&callback=initMap" async defer>
+      	</script>
+  </body>
+ </html>
