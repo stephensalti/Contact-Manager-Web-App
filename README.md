@@ -1,1 +1,2 @@
 Web App that allows the user to create, update and delete contacts, as well as visualize and track all the contacts on a table and map using node.js, HTML, CSS, Bootstrap, and the Google-Maps APIs.
+NOTE: Username is cmps369 and the password is finalproject
