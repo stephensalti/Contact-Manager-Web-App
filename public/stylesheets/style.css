@@ -16,13 +16,11 @@ td, th {
   font-size: small; 
 }
 #map{
-    margin-left:10px;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin: 10px;
     width: 99%;
     height: 500px; 
     border-style: outset;
-    border-color: #69b768;
+    border-color: black;
 }
 .update{
   color: #2e4fc9;
